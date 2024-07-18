@@ -17,8 +17,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
+    "eslint": "9.7.0",
+    "globals": "15.8.0",
     "prisma": "^5.16.2",
     "tsx": "^4.16.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "typescript-eslint": "7.16.1"
   }
 }
