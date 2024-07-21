@@ -1,10 +1,14 @@
 import fastify from "fastify";
-import { trips_routes } from "./routes/trips";
+import { tripsRoutes } from "./routes/trips";
 
 const app = fastify();
 
-app.listen({
-    port:3333,
-}).then(()=>console.log("Http Server Running "));
-
-app.register(trips_routes,{prefix:'trips'})
+app
+  .listen({
+    port: Number.parseInt(process.env.PORT as string),
+    host: "0.0.0.0",
+  })
+  .then(() => {
+    console.log("Http Server Running in port: " + app.addresses()[0].port);
+  });
+app.register(tripsRoutes, { prefix: "trips" });
