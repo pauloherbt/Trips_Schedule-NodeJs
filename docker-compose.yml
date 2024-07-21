@@ -8,3 +8,15 @@ services:
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB= ${DB_NAME}
+  trip-schedule-app:
+    container_name: trip-schedule-app
+    build:
+      context: .
+      dockerfile: Docker-file.yml
+    image: trip-schedule-app
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - DB_HOST=trip-schedule-db
+    depends_on:
+      - trip-schedule-db
