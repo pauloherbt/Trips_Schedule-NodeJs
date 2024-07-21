@@ -1,0 +1,33 @@
+# Use the official Node.js image as the base image
+FROM node:22-alpine AS builder
+
+# Create and set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm i
+
+# Copy the rest of the application files
+COPY . .
+
+# Compile TypeScript to JavaScript
+RUN npm run build
+
+# Use a smaller image for the final stage
+FROM node:22-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Copy only the compiled output and necessary files from the builder stage
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prisma ./
+COPY --from=builder /app/.env ./
+COPY --from=builder /app/dist ./dist
+
+# Set the command to run the application
+CMD ["npm","run","start"]
