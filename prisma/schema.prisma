@@ -24,3 +24,11 @@ model Trip {
 
   @@map("trips")
 }
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+}
